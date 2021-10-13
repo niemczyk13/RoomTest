@@ -7,6 +7,9 @@ import com.example.roomtest.model.datetime.DayOfWeek;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,41 +46,32 @@ public class Converts {
     public static String daysToList(Map<DayOfWeek, Boolean> days) {
         List<Boolean> list = new ArrayList<>();
         list.add(days.get(DayOfWeek.MONDAY));
-        list.add(days.get(DayOfWeek.THURSDAY));
+        list.add(days.get(DayOfWeek.TUESDAY));
         list.add(days.get(DayOfWeek.WEDNESDAY));
         list.add(days.get(DayOfWeek.THURSDAY));
         list.add(days.get(DayOfWeek.FRIDAY));
         list.add(days.get(DayOfWeek.SATURDAY));
         list.add(days.get(DayOfWeek.SUNDAY));
 
-        for (Boolean bool : days.values()) {
-            System.out.println("Bool1: " + bool);
-        }
-
         Gson gson = new Gson();
         String json = gson.toJson(list);
-        System.out.println("JSON: " + json);
         return json;
     }
 
     @TypeConverter
     public static Map<DayOfWeek, Boolean> daysForList(String json) {
         Type listType = new TypeToken<ArrayList<Boolean>>() {}.getType();
-
         List<Boolean> list = new Gson().fromJson(json, listType);
 
         Map<DayOfWeek, Boolean> days = new HashMap<>();
         days.put(DayOfWeek.MONDAY, list.get(0));
-        days.put(DayOfWeek.TUESDAY, list.get(0));
-        days.put(DayOfWeek.WEDNESDAY, list.get(0));
-        days.put(DayOfWeek.THURSDAY, list.get(0));
-        days.put(DayOfWeek.FRIDAY, list.get(0));
-        days.put(DayOfWeek.SATURDAY, list.get(0));
-        days.put(DayOfWeek.SUNDAY, list.get(0));
+        days.put(DayOfWeek.TUESDAY, list.get(1));
+        days.put(DayOfWeek.WEDNESDAY, list.get(2));
+        days.put(DayOfWeek.THURSDAY, list.get(3));
+        days.put(DayOfWeek.FRIDAY, list.get(4));
+        days.put(DayOfWeek.SATURDAY, list.get(5));
+        days.put(DayOfWeek.SUNDAY, list.get(6));
 
-        for (Boolean bool : list) {
-            System.out.println("Bool: " + bool);
-        }
         return days;
     }
 }

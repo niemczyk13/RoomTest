@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        StringBuilder string = new StringBuilder();
+
         RisingSound risingSound1 = new RisingSound(30);
         Week week1 = new Week();
         week1.activeDay(DayOfWeek.THURSDAY);
@@ -32,23 +34,32 @@ public class MainActivity extends AppCompatActivity {
         AlarmDateTime alarmDateTime = new AlarmDateTime(calendar1, week1);
         Alarm alarm1 = new Alarm("pierwszy", risingSound1, alarmDateTime);
 
-        System.out.println("Nazwa: " + alarm1.name + ", risingSound: " + alarm1.risingSound.getTime() + ", data: " + alarm1.alarmDateTime.getDateTime().getTime() + ", Week: " + alarm1.alarmDateTime.getWeek().getDays().values() + '\n');
+        string.append("Nazwa: " + alarm1.name + ", risingSound: " + alarm1.risingSound.getTime() + ", data: " + alarm1.alarmDateTime.getDateTime().getTime() + ", Week: " + alarm1.alarmDateTime.getWeek().getDays().values() + '\n');
         RisingSound risingSound2 = new RisingSound(60);
-       // Alarm alarm2 = new Alarm("drugi", risingSound2);
+        Week week2 = new Week();
+        week2.activeDay(DayOfWeek.THURSDAY);
+        week2.activeDay(DayOfWeek.MONDAY);
+        Calendar calendar2 = Calendar.getInstance();
+
+        calendar2.set(2021, 1, 10, 12,9, 0);
+
+        AlarmDateTime alarmDateTime2 = new AlarmDateTime(calendar2, week2);
+
+        Alarm alarm2 = new Alarm("drugi", risingSound2, alarmDateTime2);
 
         AlarmDatabase database = Room.databaseBuilder(getApplicationContext(), AlarmDatabase.class, "nazwa1").allowMainThreadQueries().build();
 
         AlarmDAO dao = database.alarmDAO();
 
-        dao.insertAlarm(alarm1);
-        //dao.insertAlarm(alarm2);
+        //dao.insertAlarm(alarm1);
+        dao.insertAlarm(alarm2);
 
         List<Alarm> list = dao.getAll();
         
-        StringBuilder string = new StringBuilder();
+
 
         for (Alarm a : list) {
-            string.append("Nazwa: " + a.name + ", risingSound: " + a.risingSound.getTime() + ", data: " + a.alarmDateTime.getDateTime().getTime() + ", Week: " + a.alarmDateTime.getWeek().dayIsChecked(DayOfWeek.THURSDAY) + '\n');
+            string.append("Nazwa: " + a.name + ", risingSound: " + a.risingSound.getTime() + ", data: " + a.alarmDateTime.getDateTime().getTime() + ", Week: " + a.alarmDateTime.getWeek().getDays().values() + '\n');
 
             System.out.println("Nazwa: " + a.name + ", risingSound: " + a.risingSound.getTime());
         }

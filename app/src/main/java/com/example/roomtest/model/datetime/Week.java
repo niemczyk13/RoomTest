@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Entity
 public class Week {
     private Map<DayOfWeek, Boolean> days;
     @Ignore
